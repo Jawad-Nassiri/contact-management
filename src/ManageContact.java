@@ -23,22 +23,35 @@ public class ManageContact {
         return null;
     }
 
-    public boolean modifyContact(int id, int choice, String value) {
+    public Contact searchUserById(int id) {
         for (Contact c : contacts) {
             if (c.getId() == id) {
-                switch (choice) {
-                    case 1 -> c.setFirstName(value);
-                    case 2 -> c.setLastName(value);
-                    case 3 -> c.setEmail(value);
-                    case 4 -> c.setPhone(value);
-                    default -> {
-                        return false;
-                    }
-                }
-                return true;
+                return c;
             }
         }
-        return false;
+        return null;
+    }
+
+    public void modifyContact(int id, int choice, String value) {
+
+        Contact found = searchUserById(id);
+
+        if (found == null) {
+            System.out.println("User not found");
+        }
+
+        switch (choice) {
+            case 1 -> found.setFirstName(value);
+            case 2 -> found.setLastName(value);
+            case 3 -> found.setEmail(value);
+            case 4 -> found.setPhone(value);
+            default -> {
+                System.out.println("Error");
+            }
+        }
+
+        System.out.println("User has been modified successfully !");
+
     }
 
     public boolean deleteContact(int id) {
