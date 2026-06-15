@@ -29,7 +29,7 @@ public class ManageContact {
 
     public Contact searchContactByName(String lastName) {
         for (Contact c : contacts) {
-            if (c.getLastName().equals(lastName)) {
+            if (c.getLastName().equalsIgnoreCase (lastName)) {
                 return c;
             }
         }
@@ -37,12 +37,12 @@ public class ManageContact {
         return null;
     }
 
-    public void modifyContact(int id, int choice, String value) {
+    public boolean modifyContact(int id, int choice, String value) {
         Contact found = searchContactById(id);
 
         if (found == null) {
-            System.out.println("The user not found! ");
-            return;
+            System.out.println("User not found! ");
+            return false;
         }
 
         switch (choice) {
@@ -52,21 +52,16 @@ public class ManageContact {
             case 4 -> found.setPhone(value);
             default -> {
                 System.out.println("Invalid choice");
-                return;
+                return false;
             }
         }
 
         System.out.println("User modified successfully!");
+        return true;
     }
 
     public boolean deleteContact(int id) {
-        for (int i = 0; i < contacts.size(); i++) {
-            if (contacts.get(i).getId() == id) {
-                contacts.remove(i);
-                return true;
-            }
-        }
-        return false;
+        return contacts.removeIf(c -> c.getId() == id);
     }
 
     public void saveContacts() {
@@ -100,20 +95,34 @@ public class ManageContact {
 
             while ((line = reader.readLine()) != null) {
 
+                if (line.isBlank() || !line.contains(",")) {
+                    continue;
+                }
+
                 String[] data = line.split(",");
 
-                int id = Integer.parseInt(data[0]);
-                String firstName = data[1];
-                String lastName = data[2];
-                String email = data[3];
-                String phone = data[4];
+                if (data.length != 5) {
+                    continue;
+                }
 
-                Contact c = new Contact(id, firstName, lastName, email, phone);
-                contacts.add(c);
+                try {
+                    int id = Integer.parseInt(data[0]);
+
+                    Contact c = new Contact(
+                            id,
+                            data[1],
+                            data[2],
+                            data[3],
+                            data[4]
+                    );
+
+                    contacts.add(c);
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Skipping line: invalid ID format");
+                }
             }
 
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found!");
         } catch (Exception e) {
             System.out.println("Error loading contacts");
         }
