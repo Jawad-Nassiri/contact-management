@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.io.FileWriter;
@@ -29,7 +28,7 @@ public class ManageContact {
 
     public Contact searchContactByName(String lastName) {
         for (Contact c : contacts) {
-            if (c.getLastName().equalsIgnoreCase (lastName)) {
+            if (c.getLastName().equalsIgnoreCase(lastName)) {
                 return c;
             }
         }
