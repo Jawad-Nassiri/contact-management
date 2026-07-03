@@ -130,6 +130,7 @@ public class Main {
             }
 
             boolean modified = manager.modifyContact(userId, choice, newValue);
+
             if (modified) {
                 manager.saveContacts();
             } else {

@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.io.FileWriter;
 
@@ -80,8 +81,8 @@ public class ManageContact {
 
             System.out.println("Contacts saved successfully!");
 
-        } catch (Exception e) {
-            System.out.println("Error saving contacts");
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
@@ -122,8 +123,8 @@ public class ManageContact {
                 }
             }
 
-        } catch (Exception e) {
-            System.out.println("Error loading contacts");
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
