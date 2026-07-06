@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -83,12 +84,14 @@ public class Main {
         System.out.print("Enter the last name: ");
         String name = scanner.nextLine();
 
-        Contact c = manager.searchContactByName(name);
+        ArrayList<Contact> results = manager.searchContactByName(name);
 
-        if (c != null) {
-            System.out.println(c);
-        } else {
+        if (results.isEmpty()) {
             System.out.println("Contact not found");
+        } else {
+            for (Contact c : results) {
+                System.out.println(c);
+            }
         }
     }
 

@@ -27,14 +27,16 @@ public class ManageContact {
         return null;
     }
 
-    public Contact searchContactByName(String lastName) {
+    public ArrayList<Contact> searchContactByName(String name) {
+        ArrayList<Contact> results = new ArrayList<>();
+
         for (Contact c : contacts) {
-            if (c.getLastName().equalsIgnoreCase(lastName)) {
-                return c;
+            if (c.getLastName().toLowerCase().startsWith(name.toLowerCase())) {
+                results.add(c);
             }
         }
 
-        return null;
+        return results;
     }
 
     public boolean modifyContact(int id, int choice, String value) {
