@@ -76,9 +76,15 @@ public class Main {
         String lastName = readNonBlank(scanner, "last name");
         String email = readNonBlank(scanner, "email");
         String phone = readNonBlank(scanner, "phone");
-        Contact contact = new Contact(id, firstName, lastName, email, phone);
-        manager.addContact(contact);
-        manager.saveContacts();
+        Boolean isValidEmail = isEmailValid(email);
+        if(isValidEmail) {
+            Contact contact = new Contact(id, firstName, lastName, email, phone);
+            manager.addContact(contact);
+            manager.saveContacts();
+        } else {
+            System.out.println("Email is not valid !");
+        }
+
     }
 
     public static void handleSearch(Scanner scanner, ManageContact manager) {
@@ -159,6 +165,9 @@ public class Main {
         } else {
             System.out.println("User not found !");
         }
+    }
+    public static boolean isEmailValid(String email) {
+        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     }
 
 }
