@@ -67,7 +67,7 @@ public class ManageContact {
     }
 
     public void saveContacts() {
-        String filePath = "C:\\Users\\jawad\\Desktop\\contacts.txt";
+        String filePath = System.getProperty("user.dir") + "/contacts.txt";
 
         try (FileWriter writer = new FileWriter(filePath)) {
 
@@ -89,7 +89,7 @@ public class ManageContact {
     }
 
     public void loadContacts() {
-        String filePath = "C:\\Users\\jawad\\Desktop\\contacts.txt";
+        String filePath = System.getProperty("user.dir") + "/contacts.txt";
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
 

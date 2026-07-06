@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        System.out.println(System.getProperty("user.dir") + "/contacts.txt");
         Scanner scanner = new Scanner(System.in);
         ManageContact manager = new ManageContact();
         manager.loadContacts();
