@@ -8,8 +8,7 @@ public class ContactDAO {
     public void addContact(Contact contact) {
         String sql = "INSERT INTO contacts (first_name, last_name, email, phone) VALUES (?, ?, ?, ?)";
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, contact.getFirstName());
             ps.setString(2, contact.getLastName());
@@ -30,17 +29,15 @@ public class ContactDAO {
 
         String sql = "SELECT * FROM contacts";
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             Statement st = connection.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+        try (Connection connection = DatabaseConnection.getConnection(); Statement st = connection.createStatement(); ResultSet rs = st.executeQuery(sql)) {
 
             while (rs.next()) {
                 Contact contact = new Contact(
+                        rs.getInt("id"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("email"),
-                        rs.getString("phone")
-                );
+                        rs.getString("phone"));
 
                 contacts.add(contact);
             }
@@ -52,5 +49,50 @@ public class ContactDAO {
         return contacts;
     }
 
+    public List<Contact> searchContactByName(String name) {
+        List<Contact> contacts = new ArrayList<>();
+
+        String sql = "SELECT * FROM contacts WHERE last_name LIKE ?";
+
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+
+
+            ps.setString(1, name + "%");
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Contact contact = new Contact(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), rs.getString("phone"));
+
+                contacts.add(contact);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return contacts;
+    }
+
+    //    search a contact by id
+    public Contact searchContactById(int id) {
+        String sql = "SELECT * FROM contacts WHERE id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return new Contact(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), rs.getString("phone"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
 }

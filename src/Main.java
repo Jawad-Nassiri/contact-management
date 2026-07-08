@@ -24,7 +24,7 @@ public class Main {
                 switch (userChoice) {
                     case 1 -> handleAdd(scanner, dao);
                     case 2 -> displayContacts(dao);
-//                    case 3 -> handleSearch(scanner, manager);
+                    case 3 -> handleSearch(scanner, dao);
 //                    case 4 -> handleModify(scanner, manager);
 //                    case 5 -> handleDelete(scanner, manager);
                     case 6 -> {
@@ -95,20 +95,20 @@ public class Main {
         }
     }
 
-//    public static void handleSearch(Scanner scanner, ManageContact manager) {
-//        System.out.print("Enter the last name: ");
-//        String name = scanner.nextLine();
-//
-//        ArrayList<Contact> results = manager.searchContactByName(name);
-//
-//        if (results.isEmpty()) {
-//            System.out.println("Contact not found");
-//        } else {
-//            for (Contact c : results) {
-//                System.out.println(c);
-//            }
-//        }
-//    }
+    public static void handleSearch(Scanner scanner, ContactDAO dao) {
+        System.out.print("Enter the last name: ");
+        String name = scanner.nextLine();
+
+        List<Contact> results = dao.searchContactByName(name);
+
+        if (results.isEmpty()) {
+            System.out.println("Contact not found");
+        } else {
+            for (Contact c : results) {
+                System.out.println(c);
+            }
+        }
+    }
 
 //    public static void handleModify(Scanner scanner, ManageContact manager) {
 //        String newValue = "";
