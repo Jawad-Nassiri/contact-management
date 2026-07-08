@@ -1,12 +1,18 @@
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(System.getProperty("user.dir") + "/contacts.txt");
+        Connection connection = DatabaseConnection.getConnection();
+
+        if (connection != null) {
+            System.out.println("Connected!");
+        } else {
+            System.out.println("Connection failed!");
+        }
         Scanner scanner = new Scanner(System.in);
-        ManageContact manager = new ManageContact();
-        manager.loadContacts();
+        ContactDAO dao = new ContactDAO();
         boolean running = true;
 
         while (running) {
@@ -15,11 +21,11 @@ public class Main {
 
             if (userChoice >= 1 && userChoice <= 6) {
                 switch (userChoice) {
-                    case 1 -> handleAdd(scanner, manager);
-                    case 2 -> manager.displayContacts();
-                    case 3 -> handleSearch(scanner, manager);
-                    case 4 -> handleModify(scanner, manager);
-                    case 5 -> handleDelete(scanner, manager);
+                    case 1 -> handleAdd(scanner, dao);
+//                    case 2 -> manager.displayContacts();
+//                    case 3 -> handleSearch(scanner, manager);
+//                    case 4 -> handleModify(scanner, manager);
+//                    case 5 -> handleDelete(scanner, manager);
                     case 6 -> {
                         System.out.println("Exit successfully !");
                         running = false;
@@ -61,26 +67,15 @@ public class Main {
         }
     }
 
-    public static void handleAdd(Scanner scanner, ManageContact manager) {
-        int id;
-        while (true) {
-            try {
-                System.out.print("Enter the id: ");
-                id = Integer.parseInt(scanner.nextLine());
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number!");
-            }
-        }
+    public static void handleAdd(Scanner scanner, ContactDAO dao) {
         String firstName = readNonBlank(scanner, "first name");
         String lastName = readNonBlank(scanner, "last name");
         String email = readNonBlank(scanner, "email");
         String phone = readNonBlank(scanner, "phone");
         Boolean isValidEmail = isEmailValid(email);
         if(isValidEmail) {
-            Contact contact = new Contact(id, firstName, lastName, email, phone);
-            manager.addContact(contact);
-            manager.saveContacts();
+            Contact contact = new Contact(firstName, lastName, email, phone);
+            dao.addContact(contact);
         } else {
             System.out.println("Email is not valid !");
         }

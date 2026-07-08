@@ -5,11 +5,6 @@ import java.util.ArrayList;
 import java.io.FileWriter;
 
 public class ManageContact {
-    private final ArrayList<Contact> contacts = new ArrayList<>();
-
-    public void addContact(Contact c) {
-        contacts.add(c);
-    }
 
     public void displayContacts() {
         for (Contact c : contacts) {
@@ -111,7 +106,6 @@ public class ManageContact {
                     int id = Integer.parseInt(data[0]);
 
                     Contact c = new Contact(
-                            id,
                             data[1],
                             data[2],
                             data[3],
