@@ -49,6 +49,7 @@ public class ContactDAO {
         return contacts;
     }
 
+    //    search by name
     public List<Contact> searchContactByName(String name) {
         List<Contact> contacts = new ArrayList<>();
 
@@ -93,6 +94,37 @@ public class ContactDAO {
         }
 
         return null;
+    }
+
+    //    modify contact
+    public boolean updateContact(int id, int choice, String newValue) {
+        String column = "";
+
+        switch (choice) {
+            case 1 -> column = "first_name";
+            case 2 -> column = "last_name";
+            case 3 -> column = "email";
+            case 4 -> column = "phone";
+            default -> {
+                return false;
+            }
+        }
+
+        String sql = "UPDATE contacts SET " + column + " = ? WHERE id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, newValue);
+            ps.setInt(2, id);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 }

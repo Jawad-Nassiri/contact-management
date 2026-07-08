@@ -25,7 +25,7 @@ public class Main {
                     case 1 -> handleAdd(scanner, dao);
                     case 2 -> displayContacts(dao);
                     case 3 -> handleSearch(scanner, dao);
-//                    case 4 -> handleModify(scanner, manager);
+                    case 4 -> handleModify(scanner, dao);
 //                    case 5 -> handleDelete(scanner, manager);
                     case 6 -> {
                         System.out.println("Exit successfully !");
@@ -110,55 +110,55 @@ public class Main {
         }
     }
 
-//    public static void handleModify(Scanner scanner, ManageContact manager) {
-//        String newValue = "";
-//
-//        System.out.print("Enter the userid: ");
-//        int userId = scanner.nextInt();
-//        scanner.nextLine();
-//
-//        System.out.println("1 -> First Name");
-//        System.out.println("2 -> Last Name");
-//        System.out.println("3 -> Email");
-//        System.out.println("4 -> Phone Number");
-//
-//        System.out.print("Enter a number to set a new value (1-4): ");
-//        int choice = scanner.nextInt();
-//        scanner.nextLine();
-//
-//        if (choice >= 1 && choice <= 4) {
-//            switch (choice) {
-//                case 1 -> {
-//                    System.out.print("Enter the new first name: ");
-//                    newValue = scanner.nextLine();
-//                }
-//                case 2 -> {
-//                    System.out.print("Enter the new last name: ");
-//                    newValue = scanner.nextLine();
-//                }
-//                case 3 -> {
-//                    System.out.print("Enter the new email: ");
-//                    newValue = scanner.nextLine();
-//                }
-//                case 4 -> {
-//                    System.out.print("Enter the new phone number: ");
-//                    newValue = scanner.nextLine();
-//                }
-//                default -> System.out.println("Choice is not valid !");
-//            }
-//
-//            boolean modified = manager.modifyContact(userId, choice, newValue);
-//
-//            if (modified) {
-//                manager.saveContacts();
-//            } else {
-//                System.out.println("Contact not found!");
-//            }
-//
-//        } else {
-//            System.out.println("Enter a valid choice (1-4)");
-//        }
-//    }
+    public static void handleModify(Scanner scanner, ContactDAO dao) {
+        String newValue = "";
+
+        System.out.print("Enter the userid: ");
+        int contactId = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("1 -> First Name");
+        System.out.println("2 -> Last Name");
+        System.out.println("3 -> Email");
+        System.out.println("4 -> Phone Number");
+
+        System.out.print("Enter a number to set a new value (1-4): ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        if (choice >= 1 && choice <= 4) {
+            switch (choice) {
+                case 1 -> {
+                    System.out.print("Enter the new first name: ");
+                    newValue = scanner.nextLine();
+                }
+                case 2 -> {
+                    System.out.print("Enter the new last name: ");
+                    newValue = scanner.nextLine();
+                }
+                case 3 -> {
+                    System.out.print("Enter the new email: ");
+                    newValue = scanner.nextLine();
+                }
+                case 4 -> {
+                    System.out.print("Enter the new phone number: ");
+                    newValue = scanner.nextLine();
+                }
+                default -> System.out.println("Choice is not valid !");
+            }
+
+            boolean modified = dao.updateContact(contactId, choice, newValue);
+
+            if (modified) {
+                System.out.println("Contact updated successfully !");
+            } else {
+                System.out.println("Contact not found!");
+            }
+
+        } else {
+            System.out.println("Enter a valid choice (1-4)");
+        }
+    }
 //
 //    public static void handleDelete(Scanner scanner, ManageContact manager) {
 //        System.out.print("Enter the userid: ");
