@@ -26,7 +26,7 @@ public class Main {
                     case 2 -> displayContacts(dao);
                     case 3 -> handleSearch(scanner, dao);
                     case 4 -> handleModify(scanner, dao);
-//                    case 5 -> handleDelete(scanner, manager);
+                    case 5 -> handleDelete(scanner, dao);
                     case 6 -> {
                         System.out.println("Exit successfully !");
                         running = false;
@@ -159,21 +159,20 @@ public class Main {
             System.out.println("Enter a valid choice (1-4)");
         }
     }
-//
-//    public static void handleDelete(Scanner scanner, ManageContact manager) {
-//        System.out.print("Enter the userid: ");
-//        int userid = scanner.nextInt();
-//        scanner.nextLine();
-//
-//        boolean deleted = manager.deleteContact(userid);
-//
-//        if (deleted) {
-//            System.out.println("User has been deleted successfully !");
-//            manager.saveContacts();
-//        } else {
-//            System.out.println("User not found !");
-//        }
-//    }
+
+    public static void handleDelete(Scanner scanner, ContactDAO dao) {
+        System.out.print("Enter the contact id: ");
+        int contactId = scanner.nextInt();
+        scanner.nextLine();
+
+        boolean deleted = dao.deleteContact(contactId);
+
+        if (deleted) {
+            System.out.println("Contact has been deleted successfully !");
+        } else {
+            System.out.println("Contact not found !");
+        }
+    }
 
     public static boolean isEmailValid(String email) {
         return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");

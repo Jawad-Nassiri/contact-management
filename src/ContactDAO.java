@@ -127,4 +127,24 @@ public class ContactDAO {
         return false;
     }
 
+    //    delete contact
+    public boolean deleteContact(int id) {
+        String sql = "DELETE FROM contacts WHERE id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+
+            int rows = ps.executeUpdate();
+
+            return rows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
 }
